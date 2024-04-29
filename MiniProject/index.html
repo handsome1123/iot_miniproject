@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MQTT Publisher</title>
+    <style>
+        #btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <h1>MQTT Publisher</h1>
+    <button id="btn" value="on" > On or off </button>
+
+    <script>
+        var on = true ;
+        document.getElementById('btn').addEventListener('click', async function () {
+            // const message = document.getElementById('message').value;
+            on = !on;
+            let options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    topic: 'my/test/topic', // Change this to the desired topic
+                    // topic: 'temp', // Change this to the desired topic
+                    message: on.toString()
+                })
+            }
+
+            let response = await fetch('http://localhost:3000/publish', options);
+            if (response.ok) {
+                alert('Message published successfully');
+            } else {
+                alert('Failed to publish messagedddd');
+            }
+
+        });
+    </script>
+</body>
+
+</html>
