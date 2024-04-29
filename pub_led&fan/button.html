@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MQTT Publisher</title>
+    <style>
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }        
+    </style>
+</head>
+
+<body>
+    <h1>MQTT Publisher</h1>
+    <button id="btnLed" > Button for Led </button>
+    <button id="btnFan" >Button for Fan </button>
+
+    <script>
+        // topic : led fan 
+        var onLed = false ;
+        var onFan = false ;
+        document.getElementById('btnLed').addEventListener('click', async function () {
+            // const message = document.getElementById('message').value;
+            onLed = !onLed;
+            let options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    topic: 'led', 
+                    message: onLed.toString()
+                })
+            }
+
+            let response = await fetch('http://localhost:3000/publish', options);
+            if (response.ok) {
+                alert('Message published successfully');
+            } else {
+                alert('Failed to publish messagedddd');
+            }
+
+        });
+        document.getElementById('btnFan').addEventListener('click', async function () {
+            // const message = document.getElementById('message').value;
+            onFan = !onFan;
+            let options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    topic: 'fan', // Change this to the desired topic
+                    // topic: 'temp', // Change this to the desired topic
+                    message: onFan.toString()
+                })
+            }
+
+            let response = await fetch('http://localhost:3000/publish', options);
+            if (response.ok) {
+                alert('Message published successfully');
+            } else {
+                alert('Failed to publish messagedddd');
+            }
+
+        });
+    </script>
+</body>
+
+</html>
